@@ -30,7 +30,7 @@ button,
 [type="button"]:hover,
 [type="submit"]:hover,
 button:hover {
-  background-color: white;
+  background-color: rgb(126, 159, 248);
 }
 
 .buttons {

@@ -20,6 +20,7 @@ import { Task } from "./components";
 const App = () => {
   // I've already added currTask for you as an example of useState!
   const [currTask, setCurrTask] = useState("");
+  const [tasks, setTasks] = useState([]);
   // follow this example above & with the useState hook, create a variable called tasks. its default value is an empty array []
 
   /**
@@ -32,6 +33,10 @@ const App = () => {
   const handleInput = (event) => {
     event.preventDefault(); // this prevents the page from refreshing when the button is clicked
     // TODO: call setCurrTask and pass it the string the user inputed
+    if (event.target.value.length > 0) { /* how to stop empty strings from being entered */
+      setCurrTask(event.target.value);
+      console.log({currTask});
+    }
   };
 
   /**
@@ -42,31 +47,34 @@ const App = () => {
    *          const new_array = [...old_array, "wow"] (we're adding the string "wow")
    *          console.log(new_array) -> ["hi", "bye", "wow"]
    */
-  const addTask = () => {};
+  const addTask = () => {
+    setTasks([...tasks, currTask]);
+    console.log({tasks});
+  };
 
   return (
     <div className="home">
       <div id="content">
         <ReactMarkdown source={app_background} />
         <Form>
-          <Form.Group controlId="form-input">
-            {/**
+          <Form.Group controlId="form-input"> 
+            {/* *
              * TODO: pass 2 props to the FormControl element
              * 1. placeholder (string) -> pass a string explaining what the input is for (ex: "Enter a task!")
              * 2. onChange (function) -> pass one of the functions above that handles the user's input
              */}
-            <FormControl />
+            <FormControl placeholder={"Enter a Task!"} onChange={handleInput} />
             <InputGroup.Append>
               {/** TODO: Add a prop & add some text to the button
                * 1. onClick (function) -> pass one of the functions above that handles a task being added
                * 2. Add text between the open and closing button tags, describing what the button should say
                */}
-              <Button></Button>
+              <Button onClick={() => {addTask()}} > Add a Task</Button>
             </InputGroup.Append>
           </Form.Group>
         </Form>
         {/*using your tasks array, map through it and pass each task string to the Task component via the name prop*/}
-        {tasks.map((task) => {})}
+        {tasks.map((task) => { return  <Task name={task}/> })}
       </div>
     </div>
   );
